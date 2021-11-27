@@ -7,9 +7,60 @@
     <title>Bootcamp - JavaScript 001</title>
 </head>
 <body>
-    <h1>Bootcamp JavaScript</h1>
-    <p>Bienvenidos!</p>
-    <p>Bienvenidos.</p>
+    <form action="index.html">
+        <input type="hidden" name="codigo" id="codigo">
+        <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre">
+        </div>
+        <div>
+            <label for="cantidad">Cantidad</label>
+            <input type="number" name="cantidad" id="cantidad">
+        </div>
+        <div>
+            <label for="precio">Precio</label>
+            <input type="number" name="precio" id="precio">
+        </div>
+        <div>
+            <label for="categoria">Categoría</label>
+            <select name="categoria" id="categoria">
+                <option value="1">Categoría 1</option>
+                <option value="2">Categoría 2</option>
+                <option value="3">Categoría 3</option>
+                <option value="4">Categoría 4</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Guardar</button>
+        </div>
+    </form>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Nombre</td>
+                    <td>Cantidad</td>
+                    <td>Precio</td>
+                    <td>Total</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">Totales:</td>
+                    <td id="cantidad-total">0</td>
+                    <td id="precio-total">0</td>
+                    <td id="gran-total">0</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
     <script src="index.js"></script>
 </body>
 </html>
