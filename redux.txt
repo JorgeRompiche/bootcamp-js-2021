@@ -1,0 +1,11 @@
+Actions: objetos simples que describen un cambio de estado.
+    - ejemplo: agregarProductos
+        * type: string nombre actions
+        * payload: data a agregar
+
+Store: se encarga de mantener el estado de forma consistente
+    - estado: arreglo de productos
+
+Reducer: funciones para modificar el estado segun los actions
+
+Estado: informacion utilizada para dibujar la pantalla
