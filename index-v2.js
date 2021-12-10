@@ -68,6 +68,15 @@ const reducer = (state, action) => {
         }
     }
 
+    if(action.type == "producto-seleccionado")
+    {
+        const codigo = action.payload.codigo;
+        return {
+            ...state,
+            producto: state.productos.find(x => x.codigo == codigo) || {}
+        }
+    }
+
     return state;
 };
 
@@ -81,9 +90,19 @@ const unsuscribe = store.subscribe(() => {
     {
         latestState = currentState;
         console.log("estado: ", store.getState());
+        renderForm(currentState.producto);
         renderTable(currentState.productos);
     }
 });
+
+function renderForm(producto)
+{
+    inputCodigo.value = producto.codigo || "";
+    inputNombre.value = producto.nombre || "";
+    inputCantidad.value = producto.cantidad || "";
+    inputPrecio.value = producto.precio || "";
+    selectCategoria.value = producto.categoria || 1;
+}
 
 function renderTable(productos)
 {
@@ -118,6 +137,17 @@ function renderTable(productos)
                 }
             })
         });
+
+        editar.addEventListener("click", (event) => {
+            event.preventDefault();
+            store.dispatch({
+                type: "producto-seleccionado",
+                payload: {
+                    codigo: item.codigo
+                }
+            });
+        });
+
         return tr;
     });
 
@@ -136,6 +166,62 @@ function renderTable(productos)
             .map(selector)
             .reduce((a, b) => a + b, 0);// 0 + a, a + b, ...
     }
+}
+
+
+form.addEventListener("submit", onSubmit);
+
+/**
+ * 
+ * @param {Event} event 
+ */
+function onSubmit(event)
+{
+    event.preventDefault();
+
+    const data = new FormData(form);
+    const values = Array.from(data.entries());//obtener valores del formulario
+    
+    const [frmCodigo, frmNombre, frmCantidad, frmPrecio, frmCategoria] = values;
+
+    const codigo = parseInt(frmCodigo[1]);
+    const nombre = frmNombre[1];
+    const cantidad = parseFloat(frmCantidad[1]);
+    const precio = parseFloat(frmPrecio[1]);
+    const categoria = parseInt(frmCategoria[1]);
+    
+    if(codigo)
+    {
+        store.dispatch({
+            type: "producto-modificado",
+            payload: {
+                codigo,
+                nombre,
+                cantidad,
+                precio,
+                categoria
+            }
+        });
+    }
+    else
+    {
+        store.dispatch({
+            type: "producto-agregado",
+            payload: {
+                nombre,
+                cantidad,
+                precio,
+                categoria
+            }
+        });
+    }
+
+    store.dispatch({
+        type: "producto-seleccionado",
+        payload: {
+            codigo: null
+        }
+    });
 }
 
 store.dispatch({
